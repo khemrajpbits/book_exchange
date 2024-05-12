@@ -1,7 +1,7 @@
 import { useState, createContext, useContext, Fragment } from 'react';
 
 
-const MessageInput = ({ sendMessage }) => {
+const MessageInput = ({ sendMessage, selectedUser, fetchMessages }) => {
     const [message, setMessage] = useState('');
 
     const handleMessageChange = (e) => {
@@ -12,7 +12,7 @@ const MessageInput = ({ sendMessage }) => {
         e.preventDefault();
         if (message.trim() !== '') {
             sendMessage(message);
-            // fetchMessages();
+            fetchMessages(selectedUser);
             setMessage('');
         }
     };

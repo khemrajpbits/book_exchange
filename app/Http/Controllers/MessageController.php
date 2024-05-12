@@ -72,7 +72,7 @@ class MessageController extends Controller
     public function getMessage(Request $request)
     {   
         // $messages = Message::where('user_id', $request->user_id)->paginate(10);
-        $messages = Message::where('user_id', $request->user_id)->orWhere('sender_id', $request->user_id)->paginate(10);
+        $messages = Message::whereIn('user_id', [$request->user_id,  $request->sender_id])->orWhereIn('sender_id',[$request->user_id, $request->sender_id])->with('user','sender')->paginate(10);
 
         return response()->json($messages, 200);
     }

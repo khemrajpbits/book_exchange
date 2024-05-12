@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import UserList from '@/Components/UserList';
 import MessageInput from '@/Components/MessageInput';
 import ChatDisplay from '@/Components/ChatDisplay';
+import Avatar from '@/Components/Avatar';
 
 export default function index({ auth, error }) {
     const [users, setUsers] = useState([]);
@@ -30,7 +31,7 @@ export default function index({ auth, error }) {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ user_id: userId }),
+            body: JSON.stringify({ user_id: userId, sender_id: auth.user.id }),
         })
             .then(response => response.json())
             .then(data => setMessages(data))
@@ -72,11 +73,7 @@ export default function index({ auth, error }) {
                             class="rounded-2xl bg-gray-100 py-3 px-5 w-full"
                         />
                     </div>
-                    <div
-                        class="h-12 w-12 p-2 bg-yellow-500 rounded-full text-white font-semibold flex items-center justify-center"
-                    >
-                        {auth.user.name ? auth.user.name.charAt(0) + auth.user.name.charAt(1) : ''}
-                    </div>
+                     <Avatar name={auth.user.name} />
                 </div>
                 <div class="flex flex-row justify-between bg-white">
                     <div class="flex flex-col w-2/5 border-r-2 overflow-y-auto">
@@ -88,15 +85,27 @@ export default function index({ auth, error }) {
                             />
                         </div>
                         <div className="overflow-y-auto max-h-screen-80">
-                            <UserList users={users} setSelectedUser={setSelectedUser} fetchMessages={fetchMessages} />
+                            <UserList users={users} auth={auth} selectedUser={selectedUser} setSelectedUser={setSelectedUser} fetchMessages={fetchMessages} />
                         </div>
                     </div>
                     <div class="w-full px-5 flex flex-col justify-between">
-                        <ChatDisplay auth={auth} messages={messages} />
-                        <MessageInput newMessage={newMessage} setNewMessage={setNewMessage} sendMessage={sendMessage} />
+                        <ChatDisplay auth={auth} selectedUser={selectedUser} messages={messages} />
+                        <MessageInput newMessage={newMessage} selectedUser={selectedUser} setNewMessage={setNewMessage} sendMessage={sendMessage} fetchMessages={fetchMessages} />
+                    </div>
+                    <div class="w-2/5 border-l-2 px-5">
+                        <div class="flex flex-col">
+                            <div class="font-semibold text-xl py-4"></div>
+                                <Avatar name={auth.user.name} />
+                            <div class="font-semibold py-4">{auth.user.name}</div>
+                            <div class="font-semibold py-4">{auth.user.created_at}</div>
+                            <div class="font-light">
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt,
+                                perspiciatis!
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </AuthenticatedLayout >
-    );
+    );  
 }
