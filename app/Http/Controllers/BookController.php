@@ -40,7 +40,7 @@ class BookController extends Controller
         ]);
 
         Book::create($validatedData);
-
+        // Session::flash('success', 'Book created successfully');
         return redirect()->route('books.index');
     }
 
