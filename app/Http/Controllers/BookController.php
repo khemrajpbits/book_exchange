@@ -14,7 +14,7 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books = Book::all();
+        $books = Book::with('user')->paginate(8);
         return  Inertia::render('Books/Index', ['books' => $books]);
     }
 
@@ -37,7 +37,7 @@ class BookController extends Controller
             'author' => 'required',
             'genre' => 'required',
             'book_condition' => 'required',
-            'availability_status' => 'required',
+            'availablity_status' => 'required',
         ]);
 
         Book::create($validatedData);
@@ -58,6 +58,7 @@ class BookController extends Controller
      */
     public function edit(Book $book)
     {
+        $book = Book::with('user')->findOrFail($book->id);
         return inertia('Books/Edit', ['book' => $book]);
     }
 
@@ -71,7 +72,7 @@ class BookController extends Controller
             'author' => 'required',
             'genre' => 'required',
             'book_condition' => 'required',
-            'availability_status' => 'required',
+            'availablity_status' => 'required',
         ]);
         $book->update($validatedData);
 
@@ -90,7 +91,8 @@ class BookController extends Controller
 
     public function apiIndex()  
     {
-        $books = Book::all();
+        $books = Book::with('user')->paginate(8);
+        // dd(json_encode($books));
         return response()->json($books, 200);    
     }
     public function apiShow($id)
@@ -106,12 +108,11 @@ class BookController extends Controller
         //     'author' => 'required|string|max:255',
         //     'genre' => 'required|string|max:255',
         //     'book_condition' => 'required|string|max:255',
-        //     'availability_status' => 'required|boolean',
+        //     'availablity_status' => 'required|boolean',
         // ]);
-
         $book = Book::create($request->all());
 
-        return response()->json($book, 201);
+        return response()->json($book, 200);
     }
 
     public function apiUpdate(Request $request, $id)
@@ -123,7 +124,7 @@ class BookController extends Controller
             'author' => 'required|string|max:255',
             'genre' => 'required|string|max:255',
             'book_condition' => 'required|string|max:255',
-            'availability_status' => 'required|boolean',
+            'availablity_status' => 'required|boolean',
         ]);
 
         $book->update($validatedData);

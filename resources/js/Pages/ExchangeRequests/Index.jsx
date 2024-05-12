@@ -1,67 +1,58 @@
-import dummy from './DummyData';
-
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, router } from '@inertiajs/react';
 import { useState, useEffect } from 'react';
 
 export default function index({ auth }) {
-    // const [dummyData, setDummyData] = useState(dummy);
+    const [exchangeRequests, setBooks] = useState([]);
 
-
-    // const [currentPage, setCurrentPage] = useState(1);
-    // const itemsPerPage = 5;
-    // const totalPages = Math.ceil(dummyData.length / itemsPerPage);
-
-
-    // const currentItems = dummyData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
-
-
-    // const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-
-    // const paginationButtons = Array.from({ length: totalPages }, (_, i) => (
-    //     <li key={i}>
-    //         <button
-    //             className={`${currentPage === i + 1 ? 'bg-blue-500 text-white hover:bg-blue-400' : 'bg-gray-200 text-gray-700'
-    //                 } px-3 py-2 mx-1 rounded`}
-    //             onClick={() => paginate(i + 1)}
-    //             disabled={currentPage === i + 1}
-    //         >
-    //             {i + 1}
-    //         </button>
-    //     </li>
-    // ));
-
+    useEffect(() => {
+        fetch('/api/exchange_requests')
+            .then(response => response.json())
+            .then(data => setBooks(data))
+            .catch(error => console.error('Error fetching exchange requests:', error));
+    }, []);
+    console.log(exchangeRequests);
     return (
         <AuthenticatedLayout
             user={auth.user}
             header={<h2 class="font-semibold text-xl text-gray-800 leading-tight">Exchange Request List</h2>}
         >
-            <div className="container mx-auto pt-8 pb-8">
-                <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-2xl font-bold"></h2>
+            <div className="py-12">
+                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    <div className="overflow-x-auto">
+                        <table className="table-auto w-full">
+                            <thead>
+                                <tr>
+                                    <th className="px-4 py-2">Sender</th>
+                                    <th className="px-4 py-2">Receiver</th>
+                                    <th className="px-4 py-2">Book</th>
+                                    <th className="px-4 py-2">Request Status</th>
+                                    <th className="px-4 py-2">Delivery Method</th>
+                                    <th className="px-4 py-2">Address</th>
+                                    <th className="px-4 py-2">Duration</th>
+                                    <th className="px-4 py-2">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {exchangeRequests.map(exchangeRequest => (
+                                    <tr>
+                                        <td class="border px-4 py-2">{exchangeRequest.sender.name}</td>
+                                        <td class="border px-4 py-2">{exchangeRequest.receiver && exchangeRequest.receiver.name}</td>
+                                        <td class="border px-4 py-2">{exchangeRequest.book.title}</td>
+                                        <td class="border px-4 py-2">{exchangeRequest.request_status}</td>
+                                        <td class="border px-4 py-2">{exchangeRequest.delivery_method}</td>
+                                        <td class="border px-4 py-2">{exchangeRequest.address}</td>
+                                        <td class="border px-4 py-2">{exchangeRequest.duration}</td>
+                                        <td class="border px-4 py-2">
+                                            <button type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Delete</button>
+                                            <button type="button" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Approve</button>
+                                        </td>
+                                    </tr>
+                                ))}
 
-                    <a href={route('exchange_requests.create')} className="bg-green-500 hover:bg-green-400 text-white font-bold py-2 px-4 rounded">
-                        Create Exchange
-                    </a>
-                </div>
-                <div className="overflow-x-auto">
-                    <table className="table-auto w-full">
-                        <thead>
-                            <tr>
-                                <th className="px-4 py-2">SENDER_ID</th>
-                                <th className="px-4 py-2">RECEIVER_ID</th>
-                                <th className="px-4 py-2">BOOK_ID</th>
-                                <th className="px-4 py-2">REQUEST_STATUS</th>
-                                <th className="px-4 py-2">DELIVERY_METHOD</th>
-                                <th className="px-4 py-2">ADDRESS</th>
-                                <th className="px-4 py-2">DURATION</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </AuthenticatedLayout>

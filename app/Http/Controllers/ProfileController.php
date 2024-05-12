@@ -6,13 +6,20 @@ use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Foundation\Auth\User;
 
 class ProfileController extends Controller
 {
+
+    public function index(Request $request): Response
+    {
+        $users = User::paginate(8);
+        return  Inertia::render('Profile/Index', ['users' => $users]);
+    }
+
     /**
      * Display the user's profile form.
      */
@@ -59,5 +66,11 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    public function messageUserList(Request $request)
+    {
+        $users = User::paginate(5);
+        return response()->json($users, 200);
     }
 }

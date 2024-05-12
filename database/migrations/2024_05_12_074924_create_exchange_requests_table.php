@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('book_id')->nullable();
             $table->string('request_status')->nullable();
             $table->string('delivery_method')->nullable();
+            $table->string('address')->nullable();
             $table->string('duration')->nullable();
             $table->timestamps();
         });
