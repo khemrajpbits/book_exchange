@@ -5,12 +5,12 @@ import { router } from '@inertiajs/react';
 
 export default function create({ auth, errors, flash }) {
     const [formData, setFormData] = useState({
-        sender_id: '',
-        receiver_id: '',
-        book_id: '',
-        request_status: '',
-        delivery_method: '',
-        duration: '',
+        title: '',
+        author: '',
+        genre: '',
+        book_condition: '',
+        availablity_status: '',
+        user_id: auth.user.id,  
     });
 
     const handleChange = e => {
@@ -25,17 +25,20 @@ export default function create({ auth, errors, flash }) {
         e.preventDefault();
         // router.post(route('books.store'), formData);
         try {
-            const response = fetch('/api/books', {
+            const response =  fetch('/api/books', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(formData),
             });
-            if (!response.ok) {
-                throw new Error('Failed to create book');
+            console.log(response);
+            if (response.ok) {
+                // Request was successful
+                Inertia.visit(route('books.index'));
             } else {
-                history.push('/books');
+                console.error('Request failed with status:', response.status);
+                // Handle other status codes
             }
             // Redirect or handle success
         } catch (error) {
@@ -84,11 +87,11 @@ export default function create({ auth, errors, flash }) {
                                 <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="book_condition" type="text" name="book_condition" value={formData.book_condition} onChange={handleChange} placeholder="Book Condition" />
                             </div>
                             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="availability_status">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="availablity_status">
                                     Availability Status
                                 </label>
                                 <div class="relative">
-                                    <select class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="availability_status" name="availability_status" value={formData.availability_status} onChange={handleChange}>
+                                    <select class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="availablity_status" name="availablity_status" value={formData.availablity_status} onChange={handleChange}>
                                         <option value="">Select Availablity</option>
                                         <option value="Available">Available</option>
                                         <option value="Borrowed">Borrowed</option>

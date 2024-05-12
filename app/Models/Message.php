@@ -2,11 +2,10 @@
 
 namespace App\Models;
 
-use App\Models\User;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class Book extends Model
+class Message extends Model
 {
     use HasFactory;
      /**
@@ -15,11 +14,8 @@ class Book extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'title',
-        'author',
-        'genre',
-        'book_condition',
-        'availablity_status',
+        'message',
+        'sender_id',
         'user_id',
     ];
 
@@ -27,5 +23,8 @@ class Book extends Model
     {
         return $this->belongsTo(User::class);
     }
-
+    public function sender()
+    {
+        return $this->belongsTo(User::class, 'sender_id');
+    }
 }

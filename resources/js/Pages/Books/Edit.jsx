@@ -10,7 +10,7 @@ const Edit = ({ auth, book }) => {
         author: book.author,
         genre: book.genre,
         book_condition: book.book_condition,
-        availability_status: book.availability_status,
+        availablity_status: book.availablity_status,
     });
 
     const handleChange = e => {
@@ -23,7 +23,28 @@ const Edit = ({ auth, book }) => {
 
     const handleSubmit = e => {
         e.preventDefault();
-        router.put(route('books.update', { book: book.id }), formData);
+        // router.put(route('books.update', { book: book.id }), formData);
+        try {
+            const response =  fetch('/api/books', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+            console.log(response);
+            if (response.ok) {
+                // Request was successful
+                Inertia.visit(route('books.index'));
+            } else {
+                console.error('Request failed with status:', response.status);
+                // Handle other status codes
+            }
+            // Redirect or handle success
+        } catch (error) {
+            console.error('Error creating book:', error);
+            // Handle error
+        }
     };
 
     return (
@@ -34,6 +55,13 @@ const Edit = ({ auth, book }) => {
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <form class="w-full max-w-lg" onSubmit={handleSubmit}>
+                        <div class="flex flex-wrap -mx-3 mb-6">
+                            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="title">
+                                   Book Owned By - {book.user.name}
+                                </label>
+                            </div>
+                        </div>
                         <div class="flex flex-wrap -mx-3 mb-6">
                             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="title">
@@ -66,11 +94,11 @@ const Edit = ({ auth, book }) => {
                                 <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="book_condition" type="text" name="book_condition" value={formData.book_condition} onChange={handleChange} placeholder="Book Condition" />
                             </div>
                             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="availability_status">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="availablity_status">
                                     Availability Status
                                 </label>
                                 <div class="relative">
-                                    <select class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="availability_status" name="availability_status" value={formData.availability_status} onChange={handleChange}>
+                                    <select class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="availablity_status" name="availablity_status" value={formData.availablity_status} onChange={handleChange}>
                                         <option value="">Select Availablity</option>
                                         <option value="Available">Available</option>
                                         <option value="Borrowed">Borrowed</option>

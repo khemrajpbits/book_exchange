@@ -68,7 +68,7 @@ class ExchangeRequestController extends Controller
 
     public function apiIndex()  
     {
-        $exchangeRequests = ExchangeRequest::all();
+        $exchangeRequests = ExchangeRequest::with('sender', 'receiver','book')->get();
         return response()->json($exchangeRequests, 200);    
     }
     public function apiShow($id)
@@ -86,7 +86,6 @@ class ExchangeRequestController extends Controller
         //     'book_condition' => 'required|string|max:255',
         //     'availability_status' => 'required|boolean',
         // ]);
-
         $exchangeRequest = ExchangeRequest::create($request->all());
 
         return response()->json($exchangeRequest, 201);
