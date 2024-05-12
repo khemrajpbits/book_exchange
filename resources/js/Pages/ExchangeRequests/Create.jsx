@@ -5,12 +5,11 @@ import { router } from '@inertiajs/react';
 
 export default function create({ auth, errors, flash }) {
     const [formData, setFormData] = useState({
-        sender_id: '',
-        receiver_id: '',
-        book_id: '',
-        request_status: '',
-        delivery_method: '',
-        duration: '',
+        title: '',
+        author: '',
+        genre: '',
+        book_condition: '',
+        availability_status: '',
     });
 
     const handleChange = e => {
@@ -23,9 +22,9 @@ export default function create({ auth, errors, flash }) {
 
     const handleSubmit = e => {
         e.preventDefault();
-        // router.post(route('books.store'), formData);
+        // router.post(route('exchange_requests.store'), formData);
         try {
-            const response = fetch('/api/books', {
+            const response =  fetch('/api/exchange_requests', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -33,13 +32,13 @@ export default function create({ auth, errors, flash }) {
                 body: JSON.stringify(formData),
             });
             if (!response.ok) {
-                throw new Error('Failed to create book');
-            } else {
-                history.push('/books');
+                throw new Error('Failed to create Exchange Request');
+            }else{
+                history.push('/exchange_requests');
             }
             // Redirect or handle success
         } catch (error) {
-            console.error('Error creating book:', error);
+            console.error('Error creating Exchange Request:', error);
             // Handle error
         }
     };
@@ -47,7 +46,7 @@ export default function create({ auth, errors, flash }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Book Create</h2>}
+            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Exchange Request Create</h2>}
         >
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -57,8 +56,8 @@ export default function create({ auth, errors, flash }) {
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="title">
                                     Title
                                 </label>
-                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" name="title" value={formData.title} onChange={handleChange} placeholder="Title" type="text" />
-                                <p class="text-red-500 text-xs italic">Please fill out this field.</p>
+                                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" name="title" value={formData.title} onChange={handleChange} placeholder="Title" type="text" />
+                                {/* <p class="text-red-500 text-xs italic">Please fill out this field.</p> */}
                             </div>
                             <div class="w-full md:w-1/2 px-3">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="author">

@@ -18,6 +18,7 @@ class BookController extends Controller
         return  Inertia::render('Books/Index', ['books' => $books]);
     }
 
+   
     /**
      * Show the form for creating a new resource.
      */
@@ -84,5 +85,49 @@ class BookController extends Controller
     {
         $book->delete();
         return redirect()->route('books.index');
+    }
+
+
+    public function apiIndex()  
+    {
+        $books = Book::all();
+        return response()->json($books, 200);    
+    }
+    public function apiShow($id)
+    {
+        $book = Book::findOrFail($id);
+        return response()->json($book);
+    }
+
+    public function apiStore(Request $request)
+    {
+        // $validatedData = $request->validate([
+        //     'title' => 'required|string|max:255',
+        //     'author' => 'required|string|max:255',
+        //     'genre' => 'required|string|max:255',
+        //     'book_condition' => 'required|string|max:255',
+        //     'availability_status' => 'required|boolean',
+        // ]);
+
+        $book = Book::create($request->all());
+
+        return response()->json($book, 201);
+    }
+
+    public function apiUpdate(Request $request, $id)
+    {
+        $book = Book::findOrFail($id);
+
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'author' => 'required|string|max:255',
+            'genre' => 'required|string|max:255',
+            'book_condition' => 'required|string|max:255',
+            'availability_status' => 'required|boolean',
+        ]);
+
+        $book->update($validatedData);
+
+        return response()->json($book, 200);
     }
 }

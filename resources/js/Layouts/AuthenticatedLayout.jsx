@@ -22,12 +22,17 @@ export default function Authenticated({ user, header, children }) {
 
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink href={route('dashboard')} active={route().current('dashboard')}>
-                                    Dashboard
+                                    Home
                                 </NavLink>
                             </div>
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink href={route('books.index')} active={route().current('books.index')}>
                                     Book
+                                </NavLink>
+                            </div>
+                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                <NavLink href={route('exchange_requests.index')} active={route().current('exchange_requests.index')}>
+                                    Exchange Request
                                 </NavLink>
                             </div>
                         </div>
@@ -123,8 +128,10 @@ export default function Authenticated({ user, header, children }) {
                     <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">{header}</div>
                 </header>
             )}
-
             <main>{children}</main>
+            <footer className="fixed bottom-0 w-full text-center py-4 bg-gray-200">
+                &copy; 2024 Book Exchange Platform. All rights reserved.
+            </footer>
         </div>
     );
 }
