@@ -9,20 +9,44 @@ export default function Dashboard({ auth }) {
         >
             <Head title="Dashboard" />
 
-            <div className="">
+            <div className="flex">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="relative">
-                        <h1 className="text-3xl font-bold text-center mb-4"></h1>
-                        <hr className="border-t border-gray-300 mb-4" />
-                        <img src="images/stacked-books.jpeg" alt="Your Image" className="w-full" />
-                        <ul className="absolute top-1/3 left-0 transform -translate-y-1/2 text-center">
-                            <li className="mb-2"><a href={route('books.index')} className="block px-4 py-2 bg-black text-white rounded">Book Listing & Searching</a></li>
-                            <li className="mb-2"><a to="/exchangeRequests" className="block px-4 py-2 bg-black text-white rounded">Exchange Requests</a></li>
-                            <li className="mb-2"><a href={route('profile.edit')} className="block px-4 py-2 bg-black text-white rounded">User Profiles</a></li>
-                        </ul>
-
-                    </div>
+                    <ul className="flex">
+                        <div>
+                            <li className="m-2 border border-4 rounded px-6 py-4 text-center">
+                                Users<br></br>
+                                <span>
+                                    10
+                                </span>
+                            </li>
+                            <li className="m-2 border border-4 rounded px-6 py-4 text-center">Rejected Requests<br></br>
+                                <span>
+                                    10
+                                </span>
+                            </li>
+                        </div>
+                        <div>
+                            <li className="m-2 border border-4 rounded px-6 py-4 text-center">Books<br></br>
+                                <span>
+                                10
+                                </span>
+                            </li>
+                            <li className="m-2 border border-4 rounded px-6 py-4 text-center">Approved Requests<br></br>
+                                <span>
+                                10
+                                </span>
+                            </li>
+                        </div>
+                        <div>
+                            <li className="m-2 border border-4 rounded px-6 py-4 text-center">Total Requests<br></br>
+                                <span>
+                                10
+                                </span>
+                            </li>
+                        </div>
+                    </ul>
                 </div>
+                <img src="https://static.vecteezy.com/system/resources/thumbnails/019/900/152/small_2x/old-book-watercolor-illustration-png.png" width="35%"></img>
             </div>
                
         </AuthenticatedLayout>
