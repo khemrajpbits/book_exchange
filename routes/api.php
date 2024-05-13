@@ -28,6 +28,8 @@ Route::get('exchange_requests', [ExchangeRequestController::class,'apiIndex']);
 Route::get('/exchange_requests/{id}', [ExchangeRequestController::class, 'apiShow']);
 Route::post('exchange_requests', [ExchangeRequestController::class, 'apiStore']);
 Route::put('/exchange_requests/{id}', [ExchangeRequestController::class, 'apiUpdate']);
+Route::delete('/exchange_requests/delete/{id}', [ExchangeRequestController::class, 'destroy']);
+Route::patch('/exchange_requests/approve/{id}', [ExchangeRequestController::class, 'approve']);
 
 
 Route::get('/users', [ProfileController::class, 'messageUserList']);

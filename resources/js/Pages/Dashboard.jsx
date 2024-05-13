@@ -1,7 +1,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 
-export default function Dashboard({ auth }) {
+export default function Dashboard({ auth, data }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -16,31 +16,36 @@ export default function Dashboard({ auth }) {
                             <li className="m-2 border border-4 rounded px-6 py-4 text-center">
                                 Users<br></br>
                                 <span>
-                                    10
+                                    {data.users}
                                 </span>
                             </li>
-                            <li className="m-2 border border-4 rounded px-6 py-4 text-center">Rejected Requests<br></br>
+                            <li  className="m-2 border border-4 rounded px-6 py-4 text-center">Rejected Requests<br></br>
                                 <span>
-                                    10
+                                {data.exchange_request_rejected}
                                 </span>
                             </li>
                         </div>
                         <div>
                             <li className="m-2 border border-4 rounded px-6 py-4 text-center">Books<br></br>
                                 <span>
-                                10
+                                {data.books}
                                 </span>
                             </li>
                             <li className="m-2 border border-4 rounded px-6 py-4 text-center">Approved Requests<br></br>
                                 <span>
-                                10
+                                {data.exchange_request_approved}
                                 </span>
                             </li>
                         </div>
                         <div>
                             <li className="m-2 border border-4 rounded px-6 py-4 text-center">Total Requests<br></br>
                                 <span>
-                                10
+                                {data.exchange_request}
+                                </span>
+                            </li>
+                            <li className="m-2 border border-4 rounded px-6 py-4 text-center">Pending Requests<br></br>
+                                <span>
+                                {data.exchange_request_pending}
                                 </span>
                             </li>
                         </div>

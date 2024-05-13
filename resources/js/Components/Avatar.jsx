@@ -16,7 +16,6 @@ const Avatar = ({ name }) => {
 
   return (
     <div className={`h-12 w-12 p-2 rounded-full flex items-center justify-center`} style={{ backgroundColor: bgColor }}>
-      {/* Display the first two characters of the name */}
       <span className="text-white font-semibold">
         {name ? name.slice(0, 2).toUpperCase() : ''}
       </span>

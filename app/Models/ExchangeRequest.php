@@ -38,4 +38,12 @@ class ExchangeRequest extends Model
     {
         return $this->belongsTo(Book::class);
     }
+
+    protected function casts(): array
+    {
+        return [
+            'created_at' => 'datetime:Y-m-d H:m:s',
+            'updated_at' => 'datetime:Y-m-d H:m:s',
+        ];
+    }
 }

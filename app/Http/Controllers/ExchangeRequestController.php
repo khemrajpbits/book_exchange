@@ -14,7 +14,7 @@ class ExchangeRequestController extends Controller
      */
     public function index()
     {
-        $exchangeRequests = ExchangeRequest::all();
+        $exchangeRequests = ExchangeRequest::where('request_status','!=','approved')->paginate(10);
         return  Inertia::render('ExchangeRequests/Index', ['exchangeRequests' => $exchangeRequests]);
     }
 
@@ -58,17 +58,10 @@ class ExchangeRequestController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(ExchangeRequest $exchangeRequest)
-    {
-        //
-    }
-
     public function apiIndex()  
     {
-        $exchangeRequests = ExchangeRequest::with('sender', 'receiver','book')->get();
+        $exchangeRequests = ExchangeRequest::with('sender', 'receiver','book')->paginate(5);
+        // $exchangeRequests = ExchangeRequest::with('sender', 'receiver','book')->where('request_status','!=','approved')->paginate(10);
         return response()->json($exchangeRequests, 200);    
     }
     public function apiShow($id)
@@ -106,5 +99,27 @@ class ExchangeRequestController extends Controller
         $exchangeRequest->update($validatedData);
 
         return response()->json($exchangeRequest, 200);
+    }
+
+    public function destroy($id)
+    {
+        // Find the exchange request by ID
+        $exchangeRequest = ExchangeRequest::findOrFail($id);
+
+        // Delete the exchange request
+        $exchangeRequest->delete();
+
+        return response()->json(['message' => 'Exchange request deleted successfully']);
+    }
+
+    public function approve($id)
+    {
+        // Find the exchange request by ID
+        $exchangeRequest = ExchangeRequest::findOrFail($id);
+
+        // Update the exchange request status to 'approved'
+        $exchangeRequest->update(['request_status' => 'approved']);
+
+        return response()->json(['message' => 'Exchange request approved successfully']);
     }
 }
