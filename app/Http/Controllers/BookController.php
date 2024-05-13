@@ -91,8 +91,7 @@ class BookController extends Controller
 
     public function apiIndex()  
     {
-        $books = Book::with('user')->paginate(8);
-        // dd(json_encode($books));
+        $books = Book::with('user')->paginate(6);
         return response()->json($books, 200);    
     }
     public function apiShow($id)

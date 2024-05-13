@@ -15,7 +15,7 @@ export default function index({ auth }) {
             .catch(error => console.error('Error fetching user:', error));
     }, []);
     // const [currentPage, setCurrentPage] = useState(user.current_page);
-
+console.log(users);
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -31,6 +31,8 @@ export default function index({ auth }) {
                             <thead>
                                 <tr>
                                     <th class="px-4 py-2">Name</th>
+                                    <th class="px-4 py-2">Email</th>
+                                    <th class="px-4 py-2">Created At</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -44,24 +46,30 @@ export default function index({ auth }) {
                                             <td className="border px-4 py-2" scope="row">
                                                 <a href={route('profile.edit', { user: user.id })}>{user.name}</a>
                                             </td>
+                                            <td className="border px-4 py-2" scope="row">
+                                               {user.email}
+                                            </td>
+                                            <td className="border px-4 py-2" scope="row">
+                                               {user.created_at}
+                                            </td>
                                         </tr>
                                     ))
                                 )}
 
                             </tbody>
                         </table>
-                        {/* <nav aria-label="Page navigation example">
+                        <nav aria-label="Page navigation example">
                             <ul className="inline-flex -space-x-px text-sm">
-                                {user.prev_page_url && (
+                                {users.prev_page_url && (
                                     <li>
                                         <Link
-                                            href={user.prev_page_url}
+                                            href={users.prev_page_url}
                                             onClick={() => setCurrentPage(currentPage - 1)}
                                             className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                                         >Previous</Link>
                                     </li>
                                 )}
-                                {user.links.map(link => (
+                                {users.links.map(link => (
                                     <li key={link.url}>
                                         <Link
                                             href={link.url}
@@ -70,17 +78,8 @@ export default function index({ auth }) {
                                         >{link.label}</Link>
                                     </li>
                                 ))}
-                                {user.next_page_url && (
-                                    <li>
-                                        <Link
-                                            href={user.next_page_url}
-                                            onClick={() => setCurrentPage(currentPage + 1)}
-                                            className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                                        >Next</Link>
-                                    </li>
-                                )}
                             </ul>
-                        </nav> */}
+                        </nav>
                     </div>
                 </div>
             </div>
