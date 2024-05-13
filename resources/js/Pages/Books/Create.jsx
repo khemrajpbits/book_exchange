@@ -52,7 +52,7 @@ export default function create({ auth, errors, flash }) {
             user={auth.user}
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Book Create</h2>}
         >
-            <div className="py-12">
+            <div className="py-12 flex">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <form class="w-full max-w-lg" onSubmit={handleSubmit}>
                         <div class="flex flex-wrap -mx-3 mb-6">
@@ -104,17 +104,12 @@ export default function create({ auth, errors, flash }) {
                         </div>
                         <div class="flex flex-wrap -mx-3 mb-2">
                             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white  py-2 px-4 rounded-full">
-                                    save
-                                </button>
-                            </div>
-                            {/* <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                                 <a href={route('books.index')}>
-                                    <button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded-full shadow">
-                                        Cancel
+                                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white  py-2 px-4 rounded-full">
+                                        Save
                                     </button>
                                 </a>
-                            </div> */}
+                            </div>
                         </div>
                     </form>
                 </div>
